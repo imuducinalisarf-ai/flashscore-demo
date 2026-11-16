@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Înregistrare – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="navbar"></nav>
+
+<div class="page-wrapper no-ticker" style="display:flex;align-items:center;justify-content:center;padding:40px 20px;min-height:calc(100vh - 60px)">
+  <div class="auth-box" style="max-width:500px">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">⚽</div>
+      <div class="auth-logo-text">Flash<span>Score</span></div>
+    </div>
+
+    <div class="auth-card">
+      <h1 class="auth-title">Creează cont gratuit</h1>
+      <p class="auth-subtitle">Înregistrează-te pentru a salva favorite și a urmări pariurile tale.</p>
+
+      <form class="auth-form" id="register-form" novalidate>
+        <div id="reg-error" class="form-error" style="display:none;padding:10px 14px;background:var(--red-dim);border:1px solid var(--red);border-radius:var(--radius)"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-name">Nume complet</label>
+            <div class="input-with-icon">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-name" placeholder="Ion Popescu" autocomplete="name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email</label>
+            <div class="input-with-icon">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="reg-email" placeholder="email@exemplu.ro" autocomplete="email" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Parolă</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-password" placeholder="Minim 6 caractere" autocomplete="new-password" required>
+            <button type="button" class="toggle-pw" onclick="togglePassword('reg-password')" aria-label="Afișează parola">👁</button>
+          </div>
+          <div class="password-strength">
+            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-label" id="strength-label"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-confirm">Confirmă parola</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-confirm" placeholder="Repetă parola" autocomplete="new-password" required>
+            <button type="button" class="toggle-pw" onclick="togglePassword('reg-confirm')" aria-label="Afișează parola">👁</button>
+          </div>
+        </div>
+
+        <div class="form-group" style="flex-direction:row;align-items:flex-start">
+          <label class="checkbox-label" style="align-items:flex-start;gap:10px">
+            <input type="checkbox" id="reg-terms" style="margin-top:2px">
+            <span>Sunt de acord cu <a href="#" style="color:var(--accent)">Termenii și Condițiile</a> și <a href="#" style="color:var(--accent)">Politica de confidențialitate</a></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" style="padding:12px">Creează cont</button>
+      </form>
+
+      <p class="auth-footer-text">
+        Ai deja cont? <a href="login.html">Autentifică-te</a>
+      </p>
+    </div>
+
+    <div style="margin-top:12px;text-align:center;font-size:12px;color:var(--text-muted)">
+      🔒 Datele tale sunt în siguranță. Nu trimitem spam.
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (isLoggedIn()) window.location.href = 'index.html';
+  });
+</script>
+</body>
+</html>

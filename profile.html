@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profilul meu – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+<nav class="navbar"></nav>
+
+<div class="page-wrapper no-ticker">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-header-inner">
+      <div class="profile-avatar" id="profile-avatar-letter">U</div>
+      <div class="profile-meta">
+        <h1 id="profile-name">Se încarcă...</h1>
+        <p id="profile-email"></p>
+        <p id="profile-joined" style="font-size:12px;color:var(--text-muted);margin-top:2px"></p>
+        <div class="profile-badges">
+          <span class="profile-badge">⚽ Fan fotbal</span>
+          <span class="profile-badge">🎫 Parior</span>
+          <span class="profile-badge" id="admin-badge" style="display:none;color:var(--accent);border-color:var(--accent)">⚙️ Admin</span>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="index.html" class="btn btn-secondary">← Înapoi</a>
+        <a href="admin.html" class="btn btn-secondary" id="admin-link" style="display:none">⚙️ Admin Panel</a>
+        <button onclick="logout()" class="btn btn-danger">Deconectare</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div style="max-width:1000px;margin:0 auto;padding:0 20px">
+    <div class="tabs" style="margin-bottom:24px">
+      <button class="tab-btn active" onclick="switchProfileTab(this,'tab-overview')">📊 Prezentare</button>
+      <button class="tab-btn" onclick="switchProfileTab(this,'tab-favorites')">⭐ Favorite</button>
+      <button class="tab-btn" onclick="switchProfileTab(this,'tab-bets')">🎫 Pariuri</button>
+      <button class="tab-btn" onclick="switchProfileTab(this,'tab-edit')">✏️ Editare profil</button>
+    </div>
+  </div>
+
+  <div style="max-width:1000px;margin:0 auto;padding:0 20px 60px">
+    <!-- Overview tab -->
+    <div id="tab-overview" class="tab-content active">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+        <div class="card" style="text-align:center;padding:20px">
+          <div style="font-size:32px;font-weight:800;color:var(--accent)" id="ov-fav-teams">0</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Echipe favorite</div>
+        </div>
+        <div class="card" style="text-align:center;padding:20px">
+          <div style="font-size:32px;font-weight:800;color:var(--green)" id="ov-fav-leagues">0</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Ligi favorite</div>
+        </div>
+        <div class="card" style="text-align:center;padding:20px">
+          <div style="font-size:32px;font-weight:800;color:var(--yellow)" id="ov-bets-count">0</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Bilete plasate</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span style="font-weight:700">🎯 Activitate recentă</span></div>
+        <div class="card-body" style="color:var(--text-muted);font-size:13px">
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>⭐</span> <span>Ai adăugat Manchester City la favorite</span> <span style="margin-left:auto;font-size:11px">Azi</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>🎫</span> <span>Bilet pariat · 3 selecții · Cotă 5.20</span> <span style="margin-left:auto;font-size:11px">Ieri</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0">
+            <span>👤</span> <span>Cont creat cu succes</span> <span style="margin-left:auto;font-size:11px">2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Favorites tab -->
+    <div id="tab-favorites" class="tab-content">
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header">
+          <span style="font-weight:700">🏆 Echipe favorite</span>
+          <a href="matches.html" style="font-size:12px;color:var(--accent)">Adaugă din meciuri →</a>
+        </div>
+        <div class="card-body" id="fav-teams-container">Se încarcă...</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span style="font-weight:700">🌍 Ligi favorite</span>
+        </div>
+        <div class="card-body" id="fav-leagues-container">Se încarcă...</div>
+      </div>
+    </div>
+
+    <!-- Bets tab -->
+    <div id="tab-bets" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <span style="font-weight:700">🎫 Istoricul pariurilor</span>
+          <a href="matches.html" style="font-size:12px;color:var(--accent)">Plasează pariuri →</a>
+        </div>
+        <div class="card-body" id="bet-history-container">Nu ai pariuri.</div>
+      </div>
+    </div>
+
+    <!-- Edit profile tab -->
+    <div id="tab-edit" class="tab-content">
+      <div class="edit-profile-card">
+        <div class="card-header"><span style="font-weight:700">✏️ Editare profil</span></div>
+        <div class="card-body">
+          <form class="auth-form" id="edit-profile-form" novalidate>
+            <div class="form-group">
+              <label>Nume complet</label>
+              <div class="input-with-icon">
+                <span class="input-icon">👤</span>
+                <input type="text" id="edit-name" placeholder="Numele tău complet">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Adresă email</label>
+              <div class="input-with-icon">
+                <span class="input-icon">✉️</span>
+                <input type="email" id="edit-email" placeholder="email@exemplu.ro">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Parolă nouă (opțional)</label>
+              <div class="input-with-icon">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="edit-password" placeholder="Lasă gol pentru a nu schimba">
+                <button type="button" class="toggle-pw" onclick="togglePassword('edit-password')">👁</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Echipă favorită</label>
+              <select id="edit-fav-team">
+                <option value="">-- Selectează echipă --</option>
+                ${Object.values(TEAMS || {}).flat().map(t => `<option value="${t.id}">${t.name}</option>`).join('')}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding:10px 24px">Salvează modificările</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  function switchProfileTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId)?.classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const user = getUser();
+    if (!user) { window.location.href = 'login.html'; return; }
+    if (user.role === 'admin') {
+      document.getElementById('admin-badge').style.display = 'flex';
+    }
+    // Overview stats
+    document.getElementById('ov-fav-teams').textContent = getFavTeams().length;
+    document.getElementById('ov-fav-leagues').textContent = getFavLeagues().length;
+    const betHistory = JSON.parse(localStorage.getItem('fs_bet_history') || '[]');
+    document.getElementById('ov-bets-count').textContent = betHistory.length;
+
+    // Check for anchor
+    if (window.location.hash === '#favorites') {
+      document.querySelectorAll('.tab-btn')[1]?.click();
+    }
+  });
+</script>
+</body>
+</html>

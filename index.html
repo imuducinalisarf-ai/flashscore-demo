@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlashScore România – Scoruri Live Fotbal</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/matches.css">
+  <link rel="stylesheet" href="css/league.css">
+</head>
+<body>
+
+<nav class="navbar"></nav>
+
+<div class="ticker-bar">
+  <div class="ticker-label">🔴 LIVE</div>
+  <div class="ticker-content"></div>
+</div>
+
+<div class="page-wrapper">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-title">Scoruri Live &amp; <span>Statistici Fotbal</span></div>
+    <p class="hero-subtitle">Urmărește meciurile live din cele mai importante campionate din lume.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="value" id="stat-live-count">6</div><div class="label">Meciuri LIVE</div></div>
+      <div class="hero-stat"><div class="value">6</div><div class="label">Ligi urmărite</div></div>
+      <div class="hero-stat"><div class="value">48</div><div class="label">Echipe</div></div>
+      <div class="hero-stat"><div class="value">26</div><div class="label">Meciuri azi</div></div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- League quick tabs -->
+    <div class="filter-row" id="home-league-filter">
+      <button class="filter-btn active" data-filter="all">🏆 Toate ligile</button>
+      <button class="filter-btn" data-filter="pl">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</button>
+      <button class="filter-btn" data-filter="laliga">🇪🇸 La Liga</button>
+      <button class="filter-btn" data-filter="seriea">🇮🇹 Serie A</button>
+      <button class="filter-btn" data-filter="bundesliga">🇩🇪 Bundesliga</button>
+      <button class="filter-btn" data-filter="ligue1">🇫🇷 Ligue 1</button>
+      <button class="filter-btn" data-filter="superliga">🇷🇴 Superliga</button>
+    </div>
+  </div>
+
+  <div class="layout-main">
+    <!-- Matches column -->
+    <div>
+      <div id="matches-container"></div>
+    </div>
+    <!-- Sidebar -->
+    <div>
+      <!-- Betting slip -->
+      <div id="betting-slip-mount"></div>
+
+      <!-- Top scorers quick -->
+      <div class="card mt-4" style="margin-top:20px">
+        <div class="card-header">
+          <span style="font-size:14px;font-weight:700">⚽ Top Marcatori</span>
+          <a href="league.html?id=pl" style="font-size:12px;color:var(--accent)">Premier League →</a>
+        </div>
+        <div class="card-body" style="padding:8px 0" id="quick-scorers"></div>
+      </div>
+
+      <!-- Standings mini -->
+      <div class="card" style="margin-top:16px">
+        <div class="card-header">
+          <span style="font-size:14px;font-weight:700">📊 Clasament PL</span>
+          <a href="league.html?id=pl" style="font-size:12px;color:var(--accent)">Complet →</a>
+        </div>
+        <div id="mini-standings" style="padding:8px 0"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-text">Flash<span>Score</span></div>
+      <p class="footer-desc">Cel mai rapid serviciu de scoruri live din România. Meciuri, statistici, clasamente și pariuri simulate.</p>
+      <div class="social-links">
+        <a href="contact.html" class="social-link" title="Twitter">𝕏</a>
+        <a href="contact.html" class="social-link" title="Facebook">f</a>
+        <a href="contact.html" class="social-link" title="Instagram">📷</a>
+        <a href="contact.html" class="social-link" title="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Ligi</h4>
+      <ul>
+        <li><a href="league.html?id=pl">Premier League</a></li>
+        <li><a href="league.html?id=laliga">La Liga</a></li>
+        <li><a href="league.html?id=seriea">Serie A</a></li>
+        <li><a href="league.html?id=bundesliga">Bundesliga</a></li>
+        <li><a href="league.html?id=ligue1">Ligue 1</a></li>
+        <li><a href="league.html?id=superliga">Superliga</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Navigare</h4>
+      <ul>
+        <li><a href="matches.html">Meciuri</a></li>
+        <li><a href="gallery.html">Galerie</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Autentificare</a></li>
+        <li><a href="register.html">Înregistrare</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Termeni &amp; Condiții</a></li>
+        <li><a href="#">Politică confidențialitate</a></li>
+        <li><a href="#">Politică cookies</a></li>
+        <li><a href="#">GDPR</a></li>
+        <li><a href="contact.html">Suport</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 FlashScore România. Toate drepturile rezervate.</span>
+    <span>⚽ Proiect educațional – date simulate</span>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/matches.js"></script>
+<script src="js/betting.js"></script>
+<script>
+  // Current filter
+  let currentFilter = 'all';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inject betting slip
+    document.getElementById('betting-slip-mount').innerHTML = buildBettingSlip();
+    renderBetSlip();
+
+    renderMatchesByFilter('all');
+    renderQuickScorers();
+    renderMiniStandings();
+    simulateLiveUpdates();
+
+    // Filter buttons
+    document.querySelectorAll('#home-league-filter .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#home-league-filter .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderMatchesByFilter(currentFilter);
+      });
+    });
+
+    // Live count
+    const liveCount = MATCHES.filter(m => m.status === 'LIVE').length;
+    document.getElementById('stat-live-count').textContent = liveCount;
+  });
+
+  function renderMatchesByFilter(filter) {
+    const container = document.getElementById('matches-container');
+    let matches = filter === 'all' ? [...MATCHES] : MATCHES.filter(m => m.leagueId === filter);
+
+    const grouped = {};
+    matches.forEach(m => {
+      if (!grouped[m.leagueId]) grouped[m.leagueId] = [];
+      grouped[m.leagueId].push(m);
+    });
+
+    container.innerHTML = Object.entries(grouped).map(([lgId, lgMatches]) => {
+      const league = getLeague(lgId);
+      const liveCount = lgMatches.filter(m => m.status === 'LIVE').length;
+      return `
+        <div class="league-section" id="section-${lgId}" style="margin-bottom:12px">
+          <div class="league-header" onclick="toggleLeagueSection('${lgId}')">
+            <span class="league-flag">${league?.flag || '🏆'}</span>
+            <span class="league-name-text">${league?.name || lgId}</span>
+            ${liveCount ? `<span class="badge badge-live" style="font-size:10px">${liveCount} LIVE</span>` : ''}
+            <span class="league-match-count">${lgMatches.length} meciuri</span>
+            <span class="league-toggle-icon">▾</span>
+          </div>
+          <div class="league-matches matches-wrapper">
+            ${lgMatches.map(m => renderMatchCard(m)).join('')}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderQuickScorers() {
+    const container = document.getElementById('quick-scorers');
+    if (!container) return;
+    const scorers = (TOP_SCORERS['pl'] || []).slice(0, 5);
+    const teams = TEAMS['pl'] || [];
+    container.innerHTML = scorers.map((s, i) => {
+      const team = teams.find(t => t.id === s.teamId);
+      return `<div class="player-stat-row">
+        <span class="player-rank">${i + 1}</span>
+        ${renderTeamLogo(team, 'sm')}
+        <div class="player-stat-name">
+          <div style="font-size:13px;font-weight:600">${s.player}</div>
+          <div class="player-stat-team">${team?.name || ''}</div>
+        </div>
+        <div class="stat-pills">
+          <span class="stat-pill goals">${s.goals}</span>
+          <span class="stat-pill assists">${s.assists}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderMiniStandings() {
+    const container = document.getElementById('mini-standings');
+    if (!container) return;
+    const rows = (STANDINGS['pl'] || []).slice(0, 6);
+    const teams = TEAMS['pl'] || [];
+    container.innerHTML = rows.map(row => {
+      const team = teams.find(t => t.id === row.teamId);
+      return `<div style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid var(--border)">
+        <span style="font-size:12px;font-weight:700;color:var(--text-muted);width:16px">${row.pos}</span>
+        ${renderTeamLogo(team, 'sm')}
+        <span style="flex:1;font-size:12px;font-weight:500">${team?.name || row.teamId}</span>
+        <span style="font-size:13px;font-weight:800">${row.pts}</span>
+      </div>`;
+    }).join('');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+<nav class="navbar"></nav>
+
+<div class="page-wrapper no-ticker">
+  <div class="gallery-page">
+
+    <!-- Hero -->
+    <div class="gallery-hero">
+      <h1>Galerie <span>Foto</span></h1>
+      <p>Cele mai spectaculoase momente din fotbalul mondial</p>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container" id="slideshow">
+      <div id="slideshow-track"></div>
+      <button class="slide-prev" onclick="prevSlide()" aria-label="Anterior">‹</button>
+      <button class="slide-next" onclick="nextSlide()" aria-label="Următor">›</button>
+      <div class="slideshow-dots" id="slideshow-dots"></div>
+      <div class="slideshow-progress" id="progress-bar"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="slideshow-controls">
+      <button class="control-btn active" id="autoplay-btn" onclick="toggleAutoplay()">
+        <span class="btn-icon">▶</span> Autoplay (3s)
+      </button>
+      <button class="control-btn" onclick="prevSlide()">
+        <span class="btn-icon">‹</span> Anterior
+      </button>
+      <button class="control-btn" onclick="nextSlide()">
+        Următor <span class="btn-icon">›</span>
+      </button>
+      <button class="control-btn" onclick="openLightbox(currentSlide)">
+        <span class="btn-icon">🔍</span> Mărire
+      </button>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="thumbnail-strip" id="thumbnail-strip"></div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-section-title">
+      <span>📸 Toate fotografiile</span>
+      <div class="line"></div>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-prev" onclick="lightboxPrev()" aria-label="Anterior">‹</button>
+    <button class="lightbox-next" onclick="lightboxNext()" aria-label="Următor">›</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:20px">
+    <span>© 2026 FlashScore România · Galerie foto</span>
+    <a href="index.html" style="color:var(--accent)">← Homepage</a>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>

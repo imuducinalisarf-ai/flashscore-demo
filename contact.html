@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+<nav class="navbar"></nav>
+
+<div class="page-wrapper no-ticker">
+  <div class="contact-page">
+
+    <!-- Hero -->
+    <div class="contact-hero">
+      <h1>Contactează-<span>ne</span></h1>
+      <p>Suntem aici să te ajutăm. Trimite-ne un mesaj și îți vom răspunde în cel mai scurt timp.</p>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="contact-info-grid">
+      <div class="contact-info-card">
+        <div class="contact-icon blue">📧</div>
+        <h3>Email</h3>
+        <p>Răspundem în 24 de ore</p>
+        <a href="mailto:contact@flashscore.ro">contact@flashscore.ro</a>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-icon green">📞</div>
+        <h3>Telefon</h3>
+        <p>Luni – Vineri, 9:00 – 18:00</p>
+        <a href="tel:+40721000000">+40 721 000 000</a>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-icon purple">📍</div>
+        <h3>Adresă</h3>
+        <p>Str. Sportului, nr. 10</p>
+        <a href="#">București, România</a>
+      </div>
+    </div>
+
+    <!-- Form + Map -->
+    <div class="contact-grid">
+      <!-- Form -->
+      <div class="contact-form-card">
+        <div class="contact-form-header">
+          <h2>Trimite un mesaj</h2>
+          <p>Completează formularul de mai jos și te vom contacta.</p>
+        </div>
+        <div class="contact-form-body">
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="c-name">Nume complet *</label>
+                <input type="text" id="c-name" placeholder="Ion Popescu" required>
+              </div>
+              <div class="form-group">
+                <label for="c-email">Email *</label>
+                <input type="email" id="c-email" placeholder="email@exemplu.ro" required>
+              </div>
+            </div>
+            <div class="form-subject-row">
+              <div class="form-group">
+                <label for="c-phone">Telefon</label>
+                <input type="tel" id="c-phone" placeholder="+40 7xx xxx xxx">
+              </div>
+              <div class="form-group">
+                <label for="c-subject">Subiect *</label>
+                <select id="c-subject" required>
+                  <option value="">-- Selectează subiect --</option>
+                  <option>Informații generale</option>
+                  <option>Problemă tehnică</option>
+                  <option>Raportare eroare scor</option>
+                  <option>Colaborare/Parteneriat</option>
+                  <option>Reclamație</option>
+                  <option>Altele</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="c-message">Mesaj *</label>
+              <textarea id="c-message" placeholder="Descrie în detaliu solicitarea ta..." required></textarea>
+            </div>
+            <div class="form-group" style="flex-direction:row;align-items:center">
+              <label class="checkbox-label">
+                <input type="checkbox" id="c-gdpr" required>
+                <span style="font-size:12px">Sunt de acord cu <a href="#" style="color:var(--accent)">politica de confidențialitate</a> și prelucrarea datelor.</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding:12px 28px">
+              <span>📤</span> Trimite mesajul
+            </button>
+            <div class="contact-success-msg" id="contact-success">
+              <span>✅</span>
+              <span>Mesajul tău a fost trimis cu succes! Te vom contacta în maxim 24 de ore.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-card">
+        <div class="map-card-header">
+          <h2>Locația noastră</h2>
+          <p>Vizitează-ne la sediul nostru din București.</p>
+        </div>
+        <div class="map-embed-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.0152569624394!2d26.10252931556695!3d44.43560787910238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff3d3b3b3b3b%3A0x0!2sBucharest%2C%20Romania!5e0!3m2!1sen!2sro!4v1620000000000!5m2!1sen!2sro"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Locatie FlashScore Romania - Bucuresti">
+          </iframe>
+          <div class="map-overlay-info">
+            <div class="map-address-line">⚽ FlashScore România</div>
+            <div class="map-address-sub">Str. Sportului 10, București</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Media -->
+    <div class="social-section">
+      <h2>Urmărește-ne pe rețelele sociale</h2>
+      <p>Fii la curent cu cele mai recente scoruri, știri și oferte speciale.</p>
+      <div class="social-cards">
+        <a href="#" class="social-card twitter">
+          <span class="s-icon">𝕏</span>
+          <span class="s-name">Twitter</span>
+          <span class="s-count">48.2K urmăritori</span>
+        </a>
+        <a href="#" class="social-card facebook">
+          <span class="s-icon">f</span>
+          <span class="s-name">Facebook</span>
+          <span class="s-count">125K aprecieri</span>
+        </a>
+        <a href="#" class="social-card instagram">
+          <span class="s-icon">📷</span>
+          <span class="s-name">Instagram</span>
+          <span class="s-count">62K urmăritori</span>
+        </a>
+        <a href="#" class="social-card youtube">
+          <span class="s-icon">▶</span>
+          <span class="s-name">YouTube</span>
+          <span class="s-count">18K abonați</span>
+        </a>
+        <a href="#" class="social-card telegram">
+          <span class="s-icon">✈️</span>
+          <span class="s-name">Telegram</span>
+          <span class="s-count">31K membri</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <h2>Întrebări frecvente</h2>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Cât de des se actualizează scorurile?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">Scorurile se actualizează la fiecare 30 secunde pentru meciurile live. Suntem una dintre cele mai rapide platforme de scoruri din România.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Pariurile sunt reale?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">Nu, sistemul de pariuri de pe FlashScore România este exclusiv simulat și educațional. Nu implică bani reali și nu este o platformă de gambling.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Cum pot deveni administrator?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">Rolul de administrator se acordă manual de echipa noastră. Contactează-ne prin formularul de mai sus pentru mai multe informații.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Pot raporta un scor incorect?</span>
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">Da! Folosește formularul de contact de mai sus și selectează subiectul "Raportare eroare scor". Echipa noastră va verifica și corecta în cel mai scurt timp.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:20px">
+    <span>© 2026 FlashScore România</span>
+    <a href="index.html" style="color:var(--accent)">← Homepage</a>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('c-name').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+    const subject = document.getElementById('c-subject').value;
+    const message = document.getElementById('c-message').value.trim();
+    const gdpr = document.getElementById('c-gdpr').checked;
+
+    if (!name || !email || !subject || !message) { showToast('Completează toate câmpurile obligatorii!', 'error'); return; }
+    if (!gdpr) { showToast('Trebuie să accepți politica de confidențialitate!', 'error'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Email invalid!', 'error'); return; }
+
+    // Simulate send
+    const btn = this.querySelector('button[type="submit"]');
+    btn.textContent = '⏳ Se trimite...';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('contact-success').classList.add('show');
+      this.reset();
+      btn.textContent = '📤 Trimite mesajul';
+      btn.disabled = false;
+    }, 1500);
+  });
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

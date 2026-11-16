@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<nav class="navbar"></nav>
+
+<div class="page-wrapper no-ticker">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-title">Admin Panel</div>
+      <button class="admin-nav-item active" data-admin-tab="dashboard">
+        <span class="admin-nav-icon">📊</span> <span>Dashboard</span>
+      </button>
+      <button class="admin-nav-item" data-admin-tab="users">
+        <span class="admin-nav-icon">👥</span> <span>Utilizatori</span>
+      </button>
+      <button class="admin-nav-item" data-admin-tab="matches">
+        <span class="admin-nav-icon">⚽</span> <span>Meciuri</span>
+      </button>
+      <button class="admin-nav-item" data-admin-tab="leagues">
+        <span class="admin-nav-icon">🏆</span> <span>Ligi</span>
+      </button>
+      <button class="admin-nav-item" data-admin-tab="bets">
+        <span class="admin-nav-icon">🎫</span> <span>Pariuri</span>
+      </button>
+      <div class="admin-sidebar-divider"></div>
+      <a href="index.html" class="admin-nav-item">
+        <span class="admin-nav-icon">🏠</span> <span>Site</span>
+      </a>
+      <button class="admin-nav-item" onclick="logout()">
+        <span class="admin-nav-icon">🚪</span> <span>Deconectare</span>
+      </button>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+
+      <!-- Dashboard -->
+      <div class="admin-page active" id="admin-dashboard">
+        <div class="admin-header">
+          <div>
+            <h2>Dashboard</h2>
+            <p>Bun venit! Iată o privire de ansamblu asupra platformei.</p>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted)" id="admin-date"></div>
+        </div>
+
+        <div class="admin-stat-grid">
+          <div class="admin-stat-card blue">
+            <div class="stat-card-label">Utilizatori totali</div>
+            <div class="stat-card-value blue" id="stat-users">0</div>
+            <div class="stat-card-trend">+3 această săptămână</div>
+            <div class="stat-card-icon">👥</div>
+          </div>
+          <div class="admin-stat-card green">
+            <div class="stat-card-label">Meciuri LIVE</div>
+            <div class="stat-card-value green" id="stat-live">0</div>
+            <div class="stat-card-trend">Actualizat live</div>
+            <div class="stat-card-icon">⚽</div>
+          </div>
+          <div class="admin-stat-card orange">
+            <div class="stat-card-label">Bilete pariuri</div>
+            <div class="stat-card-value orange" id="stat-bets">0</div>
+            <div class="stat-card-trend">Sesiunea curentă</div>
+            <div class="stat-card-icon">🎫</div>
+          </div>
+          <div class="admin-stat-card red">
+            <div class="stat-card-label">Ligi active</div>
+            <div class="stat-card-value red" id="stat-leagues">6</div>
+            <div class="stat-card-trend">6 campionate</div>
+            <div class="stat-card-icon">🏆</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <!-- Activity -->
+          <div class="admin-table-card">
+            <div class="admin-table-header"><h3>📋 Activitate recentă</h3></div>
+            <div class="activity-log" id="activity-log"></div>
+          </div>
+          <!-- Chart -->
+          <div class="admin-table-card">
+            <div class="admin-table-header"><h3>📊 Meciuri per ligă</h3></div>
+            <div class="chart-container" id="league-chart"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div class="admin-page" id="admin-users">
+        <div class="admin-header">
+          <div><h2>👥 Utilizatori</h2><p>Gestionează conturile utilizatorilor.</p></div>
+          <button class="btn btn-primary" onclick="openAdminModal('Adaugă Utilizator','<div class=auth-form><div class=form-group><label>Nume</label><input type=text placeholder=\"Numele complet\"></div><div class=form-group><label>Email</label><input type=email placeholder=email></div><div class=form-group><label>Parolă</label><input type=password placeholder=Parola></div></div>',()=>{showToast(\'Utilizator adăugat (simulat) ✓\',\'success\');closeAdminModal();})">
+            + Adaugă utilizator
+          </button>
+        </div>
+
+        <div class="admin-table-card">
+          <div class="admin-table-header">
+            <h3>Lista utilizatorilor</h3>
+            <div class="admin-table-actions">
+              <div class="search-bar" style="max-width:220px">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Caută utilizator..." oninput="filterUsersTable(this.value)">
+              </div>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nume</th>
+                  <th>Email</th>
+                  <th>Rol</th>
+                  <th>Status</th>
+                  <th>Înregistrat</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matches -->
+      <div class="admin-page" id="admin-matches">
+        <div class="admin-header">
+          <div><h2>⚽ Meciuri</h2><p>Gestionează meciurile și scorurile.</p></div>
+          <div style="display:flex;gap:10px">
+            <select id="admin-league-filter" onchange="filterAdminMatches()" style="width:auto;padding:8px 12px;font-size:13px">
+              <option value="all">Toate ligile</option>
+              ${LEAGUES?.map ? LEAGUES.map(l => `<option value="${l.id}">${l.flag} ${l.name}</option>`).join('') : ''}
+            </select>
+            <button class="btn btn-primary" onclick="showToast('Adăugare meci simulată ✓','success')">+ Adaugă meci</button>
+          </div>
+        </div>
+
+        <div class="admin-table-card">
+          <div class="admin-table-header"><h3>Lista meciurilor</h3></div>
+          <div style="overflow-x:auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Ligă</th>
+                  <th>Acasă</th>
+                  <th>Deplasare</th>
+                  <th>Scor</th>
+                  <th>Status</th>
+                  <th>Data/Ora</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody id="matches-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leagues -->
+      <div class="admin-page" id="admin-leagues">
+        <div class="admin-header"><div><h2>🏆 Ligi</h2><p>Gestionează ligile disponibile.</p></div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+        </div>
+      </div>
+
+      <!-- Bets -->
+      <div class="admin-page" id="admin-bets">
+        <div class="admin-header"><div><h2>🎫 Pariuri</h2><p>Biletele plasate de utilizatori.</p></div></div>
+        <div class="admin-table-card">
+          <div class="admin-table-header"><h3>Bilete plasate</h3></div>
+          <div class="card-body" id="admin-bets-list" style="padding:16px"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="admin-modal-overlay" id="admin-modal-overlay">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h3 id="admin-modal-title">Modal</h3>
+      <button class="detail-close" onclick="closeAdminModal()">✕</button>
+    </div>
+    <div class="admin-modal-body" id="admin-modal-body"></div>
+    <div class="admin-modal-footer">
+      <button class="btn btn-secondary" onclick="closeAdminModal()">Anulare</button>
+      <button class="btn btn-primary" id="admin-modal-confirm">Confirmă</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('admin-date').textContent = new Date().toLocaleDateString('ro-RO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    // Leagues admin tab
+    const lgGrid = document.querySelector('#admin-leagues .admin-page > div:last-child');
+    if (lgGrid && LEAGUES) {
+      lgGrid.innerHTML = LEAGUES.map(l => `
+        <div class="admin-table-card" style="padding:20px">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <span style="font-size:36px">${l.flag}</span>
+            <div>
+              <div style="font-size:16px;font-weight:700">${l.name}</div>
+              <div style="font-size:13px;color:var(--text-muted)">${l.country}</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:13px;margin-bottom:14px">
+            <span>⚽ ${MATCHES.filter(m => m.leagueId === l.id).length} meciuri</span>
+            <span>👥 ${(TEAMS[l.id] || []).length} echipe</span>
+            <span style="color:var(--live-color)">🔴 ${MATCHES.filter(m => m.leagueId === l.id && m.status === 'LIVE').length} live</span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="action-btn edit" onclick="showToast('Editare ligă (simulat)','success')">✏️ Editare</button>
+            <a href="league.html?id=${l.id}" class="action-btn view">👁 Vizualizare</a>
+          </div>
+        </div>`).join('');
+    }
+
+    // Bets tab
+    const betsList = document.getElementById('admin-bets-list');
+    if (betsList) {
+      const history = JSON.parse(localStorage.getItem('fs_bet_history') || '[]');
+      if (!history.length) {
+        betsList.innerHTML = '<p style="color:var(--text-muted);font-size:13px">Nu există bilete plasate în sesiunea curentă.</p>';
+      } else {
+        betsList.innerHTML = history.map((b, i) => `
+          <div class="bet-history-item">
+            <div>
+              <div style="font-size:13px;font-weight:600">Bilet #${i + 1} · ${b.bets.length} selecții · Cotă: ${b.odds.toFixed(2)}</div>
+              <div style="font-size:11px;color:var(--text-muted)">${b.date} · Miză: ${b.stake} RON · Potențial: ${b.potential} RON</div>
+            </div>
+            <span class="status-badge active">Deschis</span>
+          </div>`).join('');
+      }
+    }
+  });
+
+  function filterUsersTable(term) {
+    document.querySelectorAll('#users-tbody tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term.toLowerCase()) ? '' : 'none';
+    });
+  }
+
+  function filterAdminMatches() {
+    const val = document.getElementById('admin-league-filter').value;
+    document.querySelectorAll('#matches-tbody tr').forEach(row => {
+      if (val === 'all') row.style.display = '';
+      else row.style.display = row.innerHTML.toLowerCase().includes(val) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ligă – FlashScore România</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/matches.css">
+  <link rel="stylesheet" href="css/league.css">
+</head>
+<body>
+
+<nav class="navbar"></nav>
+
+<div class="ticker-bar">
+  <div class="ticker-label">🔴 LIVE</div>
+  <div class="ticker-content"></div>
+</div>
+
+<div class="page-wrapper">
+  <!-- League Banner -->
+  <div class="league-banner">
+    <div class="league-banner-inner">
+      <div class="league-banner-header">
+        <div class="league-banner-logo">
+          <span class="league-flag-icon" style="font-size:36px"></span>
+        </div>
+        <div class="league-banner-info">
+          <h1>Ligă</h1>
+          <div class="league-banner-meta">
+            <span class="league-country-text">Țară</span>
+            <span>·</span>
+            <span>Sezon 2025/26</span>
+          </div>
+        </div>
+        <div class="league-banner-fav">
+          <button class="fav-btn" title="Adaugă ligă la favorite" style="font-size:22px">★</button>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="league-stats-row" id="league-stats-row"></div>
+
+      <!-- Tabs -->
+      <div class="tabs" style="margin-top:4px">
+        <button class="tab-btn active" data-tab="league-matches-tab" onclick="switchLeagueTab(this,'league-matches-tab')">⚽ Meciuri</button>
+        <button class="tab-btn" data-tab="standings-tab" onclick="switchLeagueTab(this,'standings-tab')">📊 Clasament</button>
+        <button class="tab-btn" data-tab="scorers-tab" onclick="switchLeagueTab(this,'scorers-tab')">🥅 Marcatori</button>
+        <button class="tab-btn" data-tab="form-tab" onclick="switchLeagueTab(this,'form-tab')">📈 Formă</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout-main" style="padding-top:24px">
+    <div>
+      <div id="league-matches-tab" class="tab-content active"></div>
+      <div id="standings-tab" class="tab-content"></div>
+      <div id="scorers-tab" class="tab-content"></div>
+      <div id="form-tab" class="tab-content"></div>
+    </div>
+
+    <div>
+      <div id="betting-slip-mount"></div>
+
+      <!-- Other leagues quick nav -->
+      <div class="card" style="margin-top:16px">
+        <div class="card-header"><span style="font-size:13px;font-weight:700">🏆 Alte Ligi</span></div>
+        <div style="padding:8px 0" id="other-leagues"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="max-width:1280px;margin:0 auto;padding:20px">
+    <span>© 2026 FlashScore România</span>
+    <a href="index.html" style="color:var(--accent)">← Homepage</a>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/matches.js"></script>
+<script src="js/betting.js"></script>
+<script src="js/league.js"></script>
+<script>
+  function switchLeagueTab(btn, tabId) {
+    document.querySelectorAll('.league-banner .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tabId)?.classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('betting-slip-mount').innerHTML = buildBettingSlip();
+    renderBetSlip();
+    simulateLiveUpdates();
+
+    // Other leagues nav
+    const params = new URLSearchParams(window.location.search);
+    const currentId = params.get('id') || 'pl';
+    const othersEl = document.getElementById('other-leagues');
+    if (othersEl) {
+      othersEl.innerHTML = LEAGUES.filter(l => l.id !== currentId).map(l => `
+        <a href="league.html?id=${l.id}" style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);transition:background .2s" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background=''">
+          <span style="font-size:18px">${l.flag}</span>
+          <span>${l.name}</span>
+          <span style="margin-left:auto;color:var(--text-muted);font-size:11px">${l.country}</span>
+        </a>`).join('');
+    }
+  });
+</script>
+</body>
+</html>
